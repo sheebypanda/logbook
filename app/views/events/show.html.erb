@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @event.user %>
+</p>
+
+<p>
+  <strong>Si:</strong>
+  <%= @event.si %>
+</p>
+
+<p>
+  <strong>Priority:</strong>
+  <%= @event.priority %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @event.category %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @event.subject %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @event.date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event.description %>
+</p>
+
+<p>
+  <strong>Disable:</strong>
+  <%= @event.disable %>
+</p>
+
+<p>
+  <strong>Recurrent:</strong>
+  <%= @event.recurrent %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>

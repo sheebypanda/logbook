@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @si.name %>
+</p>
+
+<p>
+  <strong>Trigram:</strong>
+  <%= @si.trigram %>
+</p>
+
+<%= link_to 'Edit', edit_si_path(@si) %> |
+<%= link_to 'Back', sis_path %>
