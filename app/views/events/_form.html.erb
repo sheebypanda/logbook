@@ -4,19 +4,19 @@
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
     <div class="form-inputs">
-      <%= f.association :user %>
-      <%= f.association :si %>
-      <%= f.association :priority %>
-      <%= f.association :category %>
-      <%= f.association :subject %>
+      <%= f.association :user, :as => :hidden, :input_html => { :value => current_user.id } %>
+      <%= f.association :si, label: 'S.I' %>
+      <%= f.association :priority, label: 'Criticité' %>
+      <%= f.association :category, label: 'Catégorie' %>
+      <%= f.association :subject, label: 'Sujet' %>
       <%= f.input :date %>
       <%= f.input :description %>
-      <%= f.input :disable %>
-      <%= f.input :recurrent %>
+      <%= f.input :disable, label: 'Archiver' %>
+      <%= f.input :recurrent, label: 'Événement récurrent' %>
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit %>
+      <%= f.button :submit, 'Ajouter', class:'btn btn-primary' %>
     </div>
   <% end %>
 </div>

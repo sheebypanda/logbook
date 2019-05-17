@@ -2,7 +2,9 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = Event.all
+    @events = Event.where(recurrent: false)
+    @today_events = Event.where(date: Date.today.all_day, recurrent: false)
+    @events_recurrent = Event.where(recurrent: true)
   end
 
   def show

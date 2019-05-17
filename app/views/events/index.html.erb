@@ -1,43 +1,84 @@
-<p id="notice"><%= notice %></p>
+<% if notice  %>
+  <div class="alert alert-success animated slideInDown" role="alert">
+    <%= notice %>
+  </div>
+<% elsif alert %>
+  <div class="alert alert-danger animated slideInDown" role="alert">
+    <%= alert %>
+  </div>
+<% end %>
 
-<h1>Events</h1>
+<% if @today_events.count > 0 %>
+  <h1>Messages du jour :</h1>
+  <% @today_events.each do |e| %>
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading"><%= fa_icon('tag') %> <%= e.subject.name %> - <%= fa_icon('cloud') %>  <%= e.si.name %></h4>
+      <p><strong><%= e.description %></strong></p>
+      <hr>
+      <p class="mb-0"><%= fa_icon('user') %> <%= e.user.firstname %></p>
+    </div>
 
-<table>
+
+    <p></p>
+  <% end %>
+<% end %>
+
+<h1>Vérifications d'aujourd'hui</h1>
+
+<table class="table table-hover table-borderless">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Si</th>
-      <th>Priority</th>
-      <th>Category</th>
-      <th>Subject</th>
-      <th>Date</th>
-      <th>Description</th>
-      <th>Disable</th>
-      <th>Recurrent</th>
-      <th colspan="3"></th>
+      <th><%= fa_icon('cloud') %> S.I</th>
+      <th><%= fa_icon('tag') %> Sujet</th>
+      <th><%= fa_icon('clipboard') %> Description</th>
+      <th><%= fa_icon('user') %> Attribué à</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events_recurrent.each do |event| %>
+      <tr>
+        <td><%= event.si.name %></td>
+        <td><%= event.subject.name %></td>
+        <td><%= event.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>Tous les événement</h1>
+
+<table class="table table-hover table-borderless">
+  <thead>
+    <tr>
+      <th><%= fa_icon('user') %> Agent</th>
+      <th><%= fa_icon('cloud') %> S.I</th>
+      <th><%= fa_icon('thermometer') %> Criticité</th>
+      <th><%= fa_icon('') %> Catégorie</th>
+      <th><%= fa_icon('tag') %> Sujet</th>
+      <th><%= fa_icon('calendar') %> Date</th>
+      <th><%= fa_icon('clipboard') %> Description</th>
+      <th><%= fa_icon('disable') %> Désactivé</th>
+      <th><%= fa_icon('repeat') %> Récurrence</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td><%= event.user %></td>
-        <td><%= event.si %></td>
-        <td><%= event.priority %></td>
-        <td><%= event.category %></td>
-        <td><%= event.subject %></td>
-        <td><%= event.date %></td>
+        <td><%= event.user.firstname %></td>
+        <td><%= event.si.name %></td>
+        <td><%= event.priority.name %></td>
+        <td><%= event.category.name %></td>
+        <td><%= event.subject.name %></td>
+        <td><%= event.date.strftime("%d/%m/%y - %H:%M") %></td>
         <td><%= event.description %></td>
-        <td><%= event.disable %></td>
-        <td><%= event.recurrent %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if event.disable %><%= fa_icon('check', class:"text-success") %><% else %><%= fa_icon('close', class:"text-danger") %><% end %></td>
+        <td><% if event.recurrent %><%= fa_icon('check', class:"text-success") %><% else %><%= fa_icon('close', class:"text-danger") %><% end %></td>
+        <td><%= link_to 'Modifier', edit_event_path(event) %></td>
+        <td><%= link_to 'Détruire', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Event', new_event_path %>
