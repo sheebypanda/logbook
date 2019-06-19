@@ -5,19 +5,43 @@
 
     <div class="form-inputs">
       <%= f.association :user, :as => :hidden, :input_html => { :value => current_user.id } %>
-      <%= f.association :si, label: 'S.I' %>
-      <%= f.association :priority, label: 'Criticité' %>
-      <%= f.association :category, label: 'Catégorie' %>
-      <%= f.association :subject, label: 'Sujet' %>
-      <%= f.input :start_date, label: 'Date de début' %>
-      <%= f.input :end_date, label: 'Date de fin' %>
+      <div class="row">
+        <div class="col">
+          <%= f.association :subject, label: 'Sujet' %>
+        </div>
+        <div class="col">
+          <%= f.association :si, label: 'S.I' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= f.association :priority, label: 'Criticité' %>
+        </div>
+        <div class="col">
+          <%= f.association :category, label: 'Catégorie' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= f.input :start_date, label: 'Date de début', :as => :date, html5: true %>
+        </div>
+        <div class="col">
+        <%= f.input :end_date, label: 'Date de fin', :as => :date, html5: true %>
+        </div>
+      </div>
       <%= f.input :description %>
-      <%= f.input :disable, label: 'Archiver' %>
-      <%= f.input :recurrent, label: 'Événement récurrent' %>
+      <div class="row">
+        <div class="col">
+          <%= f.input :recurrent, label: 'Événement récurrent' %>
+        </div>
+        <div class="col">
+          <%= f.input :disable, label: 'Archiver' %>
+        </div>
+      </div>
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, 'Ajouter', class:'btn btn-primary' %>
+      <%= f.button :submit, 'Ajouter', class:'btn btn-primary btn-block' %>
     </div>
   <% end %>
 </div>

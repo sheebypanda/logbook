@@ -8,6 +8,10 @@ class EventsController < ApplicationController
     @events_recurrent = Event.where(recurrent: true)
   end
 
+  def calendrier
+
+  end
+
   def show
   end
 
