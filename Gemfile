@@ -14,12 +14,14 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'kaminari'
 gem 'devise'
+gem 'devise-i18n'
+gem 'rails-i18n'
 gem "font-awesome-rails"
 gem 'jquery-rails'
 gem 'bootstrap', '>= 4.3.1'
 gem 'animate-rails'
 gem 'simple_form'
-
+gem "simple_calendar", "~> 2.0"
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -1,9 +1,10 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_beginning_of_week, only: :index
 
   def index
     @events = Event.where(recurrent: false)
-    @today_events = Event.where(date: Date.today.all_day, recurrent: false)
+    @today_events = Event.where(start_date: Date.today.all_day, recurrent: false).or(Event.where(end_date: Date.today.all_day, recurrent: false))
     @events_recurrent = Event.where(recurrent: true)
   end
 
@@ -34,7 +35,7 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to events_path, notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
@@ -56,7 +57,11 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
+    def set_beginning_of_week
+      Date.beginning_of_week = :monday
+    end
+
     def event_params
-      params.require(:event).permit(:user_id, :si_id, :priority_id, :category_id, :subject_id, :date, :description, :disable, :recurrent)
+      params.require(:event).permit(:user_id, :si_id, :priority_id, :category_id, :subject_id, :start_date, :end_date, :description, :disable, :recurrent)
     end
 end

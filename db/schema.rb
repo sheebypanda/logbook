@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_090301) do
+ActiveRecord::Schema.define(version: 2019_05_29_112851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,12 +28,13 @@ ActiveRecord::Schema.define(version: 2019_05_17_090301) do
     t.bigint "priority_id"
     t.bigint "category_id"
     t.bigint "subject_id"
-    t.datetime "date"
+    t.datetime "start_date"
     t.text "description"
     t.boolean "disable"
     t.boolean "recurrent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "end_date"
     t.index ["category_id"], name: "index_events_on_category_id"
     t.index ["priority_id"], name: "index_events_on_priority_id"
     t.index ["si_id"], name: "index_events_on_si_id"

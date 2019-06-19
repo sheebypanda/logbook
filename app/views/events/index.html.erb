@@ -8,22 +8,32 @@
   </div>
 <% end %>
 
-<% if @today_events.count > 0 %>
-  <h1>Messages du jour :</h1>
-  <% @today_events.each do |e| %>
-    <div class="alert alert-info" role="alert">
-      <h4 class="alert-heading"><%= fa_icon('tag') %> <%= e.subject.name %> - <%= fa_icon('cloud') %>  <%= e.si.name %></h4>
-      <p><strong><%= e.description %></strong></p>
-      <hr>
-      <p class="mb-0"><%= fa_icon('user') %> <%= e.user.firstname %></p>
+<div class="row">
+  <% if @today_events.count > 0 %>
+    <% @today_events.each do |e| %>
+    <div class="col">
+      <div class="card ">
+        <div class="card-body">
+          <h5 class="card-title">
+            <span class="badge badge-pill badge-primary">
+              <%= fa_icon('tag')%> <%= e.subject.name %>
+            </span>
+            <span class="badge badge-pill badge-info">
+              <%= fa_icon('cloud') %>  <%= e.si.trigram %></span></h5>
+          <p class="card-text"><%= e.description %>.</p>
+          <p class="card-text"><small class="text-muted"><%= fa_icon('user') %> <%= e.user.firstname %></small></p>
+        </div>
+      </div>
     </div>
-
-
-    <p></p>
+    <% end %>
   <% end %>
+</div>
+
+<%= week_calendar do |date| %>
+<%= date.day %>/<%= date.month %>
 <% end %>
 
-<h1>Vérifications d'aujourd'hui</h1>
+<h1>Vérifications récurrentes</h1>
 
 <table class="table table-hover table-borderless">
   <thead>
@@ -41,12 +51,13 @@
         <td><%= event.si.name %></td>
         <td><%= event.subject.name %></td>
         <td><%= event.description %></td>
+        <td><%= event.user.firstname %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<h1>Tous les événement</h1>
+<h1>Tous les événements</h1>
 
 <table class="table table-hover table-borderless">
   <thead>
@@ -56,7 +67,8 @@
       <th><%= fa_icon('thermometer') %> Criticité</th>
       <th><%= fa_icon('') %> Catégorie</th>
       <th><%= fa_icon('tag') %> Sujet</th>
-      <th><%= fa_icon('calendar') %> Date</th>
+      <th><%= fa_icon('calendar') %> Date de début</th>
+      <th><%= fa_icon('calendar') %> Date de fin</th>
       <th><%= fa_icon('clipboard') %> Description</th>
       <th><%= fa_icon('disable') %> Désactivé</th>
       <th><%= fa_icon('repeat') %> Récurrence</th>
@@ -72,7 +84,8 @@
         <td><%= event.priority.name %></td>
         <td><%= event.category.name %></td>
         <td><%= event.subject.name %></td>
-        <td><%= event.date.strftime("%d/%m/%y - %H:%M") %></td>
+        <td><%= event.start_date.strftime("%d/%m/%y - %H:%M") %></td>
+        <td><%= event.end_date.strftime("%d/%m/%y - %H:%M") if event.end_date %></td>
         <td><%= event.description %></td>
         <td><% if event.disable %><%= fa_icon('check', class:"text-success") %><% else %><%= fa_icon('close', class:"text-danger") %><% end %></td>
         <td><% if event.recurrent %><%= fa_icon('check', class:"text-success") %><% else %><%= fa_icon('close', class:"text-danger") %><% end %></td>

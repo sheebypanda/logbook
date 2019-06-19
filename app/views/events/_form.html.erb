@@ -9,7 +9,8 @@
       <%= f.association :priority, label: 'Criticité' %>
       <%= f.association :category, label: 'Catégorie' %>
       <%= f.association :subject, label: 'Sujet' %>
-      <%= f.input :date %>
+      <%= f.input :start_date, label: 'Date de début' %>
+      <%= f.input :end_date, label: 'Date de fin' %>
       <%= f.input :description %>
       <%= f.input :disable, label: 'Archiver' %>
       <%= f.input :recurrent, label: 'Événement récurrent' %>
