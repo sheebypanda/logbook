@@ -1,0 +1,76 @@
+<% if notice  %>
+  <div class="alert alert-success animated slideInDown" role="alert">
+    <%= notice %>
+  </div>
+<% elsif alert %>
+  <div class="alert alert-danger animated slideInDown" role="alert">
+    <%= alert %>
+  </div>
+<% end %>
+
+
+
+<!-- Block en cas d'événement dans la journée -->
+<% if @today_events.count > 0 %>
+  <div class="row">
+    <% @today_events.each do |e| %>
+      <div class="col">
+        <div class="card ">
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="badge badge-pill badge-primary"><%= fa_icon('tag')%> <%= e.subject.name %></span>
+              <span class="badge badge-pill badge-info"><%= fa_icon('cloud') %>  <%= e.si.trigram %></span>
+            </h5>
+            <p class="card-text"><%= e.description %>.</p>
+            <p class="card-text"><small class="text-muted"><%= fa_icon('user') %> <%= e.user.firstname %></small></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-success animated bounce slower" role="alert">
+        Pas d'événement aujourd'hui ! 😀️😴️
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+
+<%= week_calendar do |date| %>
+  <span class="badge badge-pill badge-light"><%= date.day %></span>
+  <select class="form-control">
+    <option selected></option>
+    <% User.all.each do |u| %>
+      <option value="<%= u.id %>"><%= u.firstname %></option>
+    <% end %>
+  </select>
+
+<% end %>
+
+<h1 class="text-center m-3">Vérifications récurrentes</h1>
+
+<table class="table table-hover table-borderless">
+  <thead>
+    <tr>
+      <th><%= fa_icon('cloud') %> S.I</th>
+      <th><%= fa_icon('tag') %> Sujet</th>
+      <th><%= fa_icon('clipboard') %> Description</th>
+      <th><%= fa_icon('user') %> Attribué à</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events_recurrent.each do |event| %>
+      <tr>
+        <td><%= event.si.name %></td>
+        <td><%= event.subject.name %></td>
+        <td><%= event.description %></td>
+        <td><%= event.user.firstname %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,14 +1,16 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :set_beginning_of_week, only: :index
+  before_action :set_beginning_of_week, only: [:index, :dashboard, :calendrier]
+  before_action :get_events, only: [:index, :dashboard, :calendrier]
 
   def index
-    @events = Event.where(recurrent: false)
-    @today_events = Event.where(start_date: Date.today.all_day, recurrent: false).or(Event.where(end_date: Date.today.all_day, recurrent: false))
-    @events_recurrent = Event.where(recurrent: true)
   end
 
   def calendrier
+    @month_events = Event.where(recurrent: false)
+  end
+
+  def dashboard
 
   end
 
@@ -63,6 +65,12 @@ class EventsController < ApplicationController
 
     def set_beginning_of_week
       Date.beginning_of_week = :monday
+    end
+
+    def get_events
+      @events = Event.where(recurrent: false)
+      @today_events = Event.where(start_date: Date.today.all_day, recurrent: false).or(Event.where(end_date: Date.today.all_day, recurrent: false))
+      @events_recurrent = Event.where(recurrent: true)
     end
 
     def event_params

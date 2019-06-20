@@ -1,0 +1,35 @@
+<% if notice  %>
+  <div class="alert alert-success animated slideInDown" role="alert">
+    <%= notice %>
+  </div>
+<% elsif alert %>
+  <div class="alert alert-danger animated slideInDown" role="alert">
+    <%= alert %>
+  </div>
+<% end %>
+
+<%= month_calendar events: @month_events do |date, events| %>
+
+  <span class="badge badge-light"><%= date.day %></span>
+
+  <% events.each do |e| %>
+
+    <div class="card mb-1 bg-<% if e.priority.value == 1 %>primary
+    <% elsif e.priority.value == 2 %>warning
+    <% elsif e.priority.value == 3 %>danger
+    <% else %>info<% end %>
+     text-white">
+
+      <div class="card-body">
+        <h6 class="card-title d-flex justify-content-between align-items-center">
+          <%= e.subject.name %>
+          <span class="badge badge-pill badge-success"><%= e.si.trigram %></span>
+        </h6>
+        <p class="card-text">
+          <span class="badge badge-pill badge-light"><%= e.category.name %></span>
+        <%= e.description %>.</p>
+      </div>
+    </div>
+
+  <% end %>
+<% end %>

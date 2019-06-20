@@ -20,7 +20,7 @@
       <tr>
         <% date_range.slice(0, 7).each do |day| %>
           <% unless day.wday == 0 or day.wday == 6 %>
-            <th><%= t('date.abbr_day_names')[day.wday] %></th>
+            <th><%= t('date.day_names')[day.wday] %></th>
           <% end %>
         <% end %>
       </tr>
