@@ -11,7 +11,13 @@ class EventsController < ApplicationController
   end
 
   def dashboard
-
+    @verifications = Array.new
+    @events_recurrent.each do |e|
+      verification = Verification.new
+      verification['date'] = Date.today
+      verification['event_id'] = e.id
+      @verifications << verification
+    end
   end
 
   def show

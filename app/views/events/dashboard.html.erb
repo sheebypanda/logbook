@@ -60,16 +60,30 @@
       <th><%= fa_icon('tag') %> Sujet</th>
       <th><%= fa_icon('clipboard') %> Description</th>
       <th><%= fa_icon('user') %> Attribué à</th>
+      <th><%= fa_icon('comment') %> Commentaire</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @events_recurrent.each do |event| %>
+    <% @verifications.each do |v| %>
       <tr>
-        <td><%= event.si.name %></td>
-        <td><%= event.subject.name %></td>
-        <td><%= event.description %></td>
-        <td><%= event.user.firstname %></td>
+        <td><%= v.event.si.name %></td>
+        <td><%= v.event.subject.name %></td>
+        <td><%= v.event.description %></td>
+        <td>
+          <% if v.user.present? %>
+            <%= v.user.firstname %>
+          <% else %>
+            <%= simple_form_for(v) do |f| %>
+
+            <%= f.association :user, as: :select, label: false %></td><td>
+            <%= f.input :commentaire, label: false %>
+
+            <% end %>
+          <% end %>
+
+
+        </td>
       </tr>
     <% end %>
   </tbody>

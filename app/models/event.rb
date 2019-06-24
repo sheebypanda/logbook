@@ -5,6 +5,8 @@ class Event < ApplicationRecord
   belongs_to :category
   belongs_to :subject
 
+  has_many :verifications
+
   def start_time
     self.start_date
   end

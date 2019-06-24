@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_29_112851) do
+ActiveRecord::Schema.define(version: 2019_06_20_091243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 2019_05_29_112851) do
     t.index ["si_id"], name: "index_events_on_si_id"
     t.index ["subject_id"], name: "index_events_on_subject_id"
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "permanences", force: :cascade do |t|
+    t.bigint "user_id"
+    t.date "date"
+    t.boolean "morning"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_permanences_on_user_id"
   end
 
   create_table "priorities", force: :cascade do |t|
@@ -77,9 +86,23 @@ ActiveRecord::Schema.define(version: 2019_05_29_112851) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "verifications", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "event_id"
+    t.date "date"
+    t.text "commentaire"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_verifications_on_event_id"
+    t.index ["user_id"], name: "index_verifications_on_user_id"
+  end
+
   add_foreign_key "events", "categories"
   add_foreign_key "events", "priorities"
   add_foreign_key "events", "sis"
   add_foreign_key "events", "subjects"
   add_foreign_key "events", "users"
+  add_foreign_key "permanences", "users"
+  add_foreign_key "verifications", "events"
+  add_foreign_key "verifications", "users"
 end
