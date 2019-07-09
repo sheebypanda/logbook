@@ -8,7 +8,47 @@
   </div>
 <% end %>
 
-<h1>Tous les événements</h1>
+<h1 class="text-center">Tous les événements récurrents</h1>
+
+<table class="table table-hover table-borderless">
+  <thead>
+    <tr>
+      <th><%= fa_icon('user') %> Agent</th>
+      <th><%= fa_icon('cloud') %> S.I</th>
+      <th><%= fa_icon('thermometer') %> Criticité</th>
+      <th><%= fa_icon('') %> Catégorie</th>
+      <th><%= fa_icon('tag') %> Sujet</th>
+      <th><%= fa_icon('calendar') %> Date de début</th>
+      <th><%= fa_icon('calendar') %> Date de fin</th>
+      <th><%= fa_icon('clipboard') %> Description</th>
+      <th><%= fa_icon('disable') %> Désactivé</th>
+      <th><%= fa_icon('repeat') %> Récurrence</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events_recurrent.each do |event| %>
+      <tr>
+        <td><%= event.user.firstname %></td>
+        <td><%= event.si.name %></td>
+        <td><%= event.priority.name %></td>
+        <td><%= event.category.name %></td>
+        <td><%= event.subject.name %></td>
+        <td><%= event.start_date.strftime("%d/%m/%y - %H:%M") %></td>
+        <td><%= event.end_date.strftime("%d/%m/%y - %H:%M") if event.end_date %></td>
+        <td><%= event.description %></td>
+        <td><% if event.disable %><%= fa_icon('check', class:"text-success") %><% else %><%= fa_icon('close', class:"text-danger") %><% end %></td>
+        <td><% if event.recurrent %><%= fa_icon('check', class:"text-success") %><% else %><%= fa_icon('close', class:"text-danger") %><% end %></td>
+        <td><%= link_to 'Modifier', edit_event_path(event) %></td>
+        <td><%= link_to 'Détruire', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h1 class="text-center">Tous les événements non-récurrents</h1>
 
 <table class="table table-hover table-borderless">
   <thead>

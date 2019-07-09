@@ -21,6 +21,9 @@
       <li class="nav-item <% if request.path.start_with?('/calendrier') %>active<% end %>">
         <a class="nav-link" href="/calendrier"><%= fa_icon('calendar', class: 'text-success') %> Calendrier</a>
       </li>
+      <li class="nav-item <% if request.path.start_with?('/permanences') %>active<% end %>">
+        <a class="nav-link" href="/permanences"><%= fa_icon('clock-o', class: 'text-success') %> Permanences</a>
+      </li>
       <li class="nav-item <% if request.path.start_with?('/events') %>active<% end %>">
         <a class="nav-link" href="<%= events_path %>"><%= fa_icon('calendar-plus-o', class: 'text-success') %> Événements</a>
       </li>

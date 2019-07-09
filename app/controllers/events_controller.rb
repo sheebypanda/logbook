@@ -4,6 +4,7 @@ class EventsController < ApplicationController
   before_action :get_events, only: [:index, :dashboard, :calendrier]
 
   def index
+    @events_recurrent = Event.where(recurrent: true)
   end
 
   def calendrier

@@ -1,0 +1,40 @@
+<% compteur = 1 %>
+<%= week_calendar do |date| %>
+
+  <% p =  Permanence.where(date: date) %>
+
+  <% if p.present? %>
+  <p id="permanence<%= p.first.id %>" class="text-center mt-3">
+    <%= fa_icon('user') %> <%= p.first.user.firstname %> <%= p.first.user.name %>
+    <%= link_to fa_icon('close'), p.first, method: :delete, remote: true, class: 'text-danger' %>
+
+  <% @permanence = Permanence.new(date: date) %>
+
+  <%= simple_form_for @permanence, html: { class: "form-inline hidden hidden-" + p.first.id.to_s}, remote: true do |f| %>
+
+    <%= f.association :user, label: false, label_method: lambda {|e| "#{e.firstname} #{e.name}"}, class: date.to_s  %>
+    <%= f.input :date, :as => :hidden, :input_html => { :value => date } %>
+    <%= f.submit '+', class: 'btn btn-primary ml-3 compteur'+compteur.to_s %>
+
+  <% end %>
+</p>
+
+  <% else %>
+
+    <% @permanence = Permanence.new(date: date) %>
+
+    <%= simple_form_for @permanence, html: { class: "form-inline compteur"+compteur.to_s}, remote: true do |f| %>
+
+      <%= f.association :user,
+        label: false,
+        label_method: lambda {|e| "#{e.firstname} #{e.name}"},
+        :input_html => {:class => "compteur"+compteur.to_s} %>
+      <%= f.input :date, :as => :hidden, :input_html => { :value => date } %>
+      <%= f.submit '+', class: 'btn btn-primary ml-3 compteur'+compteur.to_s %>
+
+    <% end %>
+
+  <% end %>
+
+  <% compteur += 1 %>
+<% end %>
