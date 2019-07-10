@@ -1,0 +1,16 @@
+<div id="half-day-<%= date %>-<%= morning ? "am" : "pm" %>">
+  <% p =  Permanence.where(date: date, morning: morning).first %>
+  <% if p.present? %>
+    <p id="permanence<%= p.id %>" class="text-center mt-3">
+      <%= fa_icon('user') %> <%= p.user.firstname %> <%= p.user.name %>
+      <%= link_to fa_icon('close'), p, method: :delete, remote: true, class: 'text-danger' %>
+    </p>
+  <% else %>
+    <% permanence = Permanence.new(date: date) %>
+    <%= simple_form_for permanence, html: { class: "compteur"+compteur.to_s}, remote: true do |f| %>
+      <%= f.association :user, label: false, label_method: lambda {|e| "#{e.firstname} #{e.name}"}, input_html: { class: "mt-1 compteur#{compteur}", onchange: "Rails.fire(this.form, 'submit')" } %>
+      <%= f.input :date, :as => :hidden, :input_html => { :value => date } %>
+      <%= f.input :morning, :as => :hidden, :input_html => { :value => morning } %>
+    <% end %>
+  <% end %>
+</div>

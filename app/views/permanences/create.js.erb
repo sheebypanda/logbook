@@ -1,1 +1,2 @@
-location.reload();
+var el = $('#half-day-<%= @permanence.date %>-<%= @permanence.morning ? "am" : "pm" %>')
+el.replaceWith('<%= j render "half_day", date: @permanence.date, compteur: 0, morning: @permanence.morning %>')

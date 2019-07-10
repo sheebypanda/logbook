@@ -9,8 +9,8 @@ class PermanencesController < ApplicationController
 
   def create
     @permanence = Permanence.new(permanence_params)
-    respond_to do |format|
-      if @permanence.save
+    if @permanence.save
+      respond_to do |format|
         format.js
       end
     end

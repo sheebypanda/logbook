@@ -1,2 +1,2 @@
-$("#permanence<%= @permanence.id %>").addClass("animated fadeOutDown").hide();
-$(".hidden-<%= @permanence.id %>").show().addClass("animated fadeInUp");
+var el = $('#half-day-<%= @permanence.date %>-<%= @permanence.morning ? "am" : "pm" %>')
+el.replaceWith('<%= j render "half_day", date: @permanence.date, compteur: 0, morning: @permanence.morning %>')

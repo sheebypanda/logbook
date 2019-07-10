@@ -3,8 +3,4 @@ document.addEventListener("turbolinks:load", function() {
 
   $(".hidden").hide();
 
-  // $('select.compteur1').on("change", function(){
-  //   $("form.compteur1").submit();
-  // });
-
 });
