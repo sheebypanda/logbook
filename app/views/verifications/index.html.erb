@@ -8,8 +8,6 @@
   </div>
 <% end %>
 
-
-
 <!-- Block en cas d'événement dans la journée -->
 <% if @today_events.count > 0 %>
   <div class="row">
@@ -38,20 +36,7 @@
   </div>
 <% end %>
 
-
-
-<%= week_calendar do |date| %>
-  <span class="badge badge-pill badge-light"><%= date.day %></span>
-  <select class="form-control">
-    <option selected></option>
-    <% User.all.each do |u| %>
-      <option value="<%= u.id %>"><%= u.firstname %></option>
-    <% end %>
-  </select>
-
-<% end %>
-
-<h1 class="text-center m-3">Vérifications récurrentes</h1>
+<h2 class="text-center m-3">Vérifications récurrentes</h2>
 
 <table class="table table-hover table-borderless">
   <thead>
@@ -61,30 +46,39 @@
       <th><%= fa_icon('clipboard') %> Description</th>
       <th><%= fa_icon('user') %> Attribué à</th>
       <th><%= fa_icon('comment') %> Commentaire</th>
+      <th><%= fa_icon('check') %> Valider</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @verifications.each do |v| %>
-      <tr>
-        <td><%= v.event.si.name %></td>
-        <td><%= v.event.subject.name %></td>
-        <td><%= v.event.description %></td>
-        <td>
-          <% if v.user.present? %>
-            <%= v.user.firstname %>
-          <% else %>
-            <%= simple_form_for(v) do |f| %>
-
-            <%= f.association :user, as: :select, label: false %></td><td>
-            <%= f.input :commentaire, label: false %>
-
-            <% end %>
+    <% @events_recurrent.each do |e| %>
+      <% v = Verification.where(date: Date.today, event_id: e.id).first %>
+      <% if v.present? %>
+        <tr class="table-success">
+          <td><%= v.event.si.name %></td>
+          <td><%= v.event.subject.name %></td>
+          <td><%= v.event.description %></td>
+          <td><%= v.user.firstname %> <%= v.user.name %></td>
+          <td><%= v.commentaire %></td>
+          <td><%= link_to fa_icon('close'), v, method: :delete, remote: true, class: 'btn btn-danger btn-sm' %></td>
+        </tr>
+      <% else %>
+        <% v = Verification.new %>
+        <% v['event_id'] = e.id %>
+        <% v['user_id'] = current_user.id %>
+        <tr>
+          <td><%= e.si.name %></td>
+          <td><%= e.subject.name %></td>
+          <td><%= e.description %></td>
+          <%= simple_form_for v, remote: true do |f| %>
+            <td><%= f.association :user, as: :select, label: false, label_method: lambda {|e| "#{e.firstname} #{e.name}"} %></td>
+            <%= f.input :date, as: :hidden, :input_html => {:value => Date.today} %>
+            <%= f.input :event_id, as: :hidden, :input_html => {:value => e.id} %>
+            <td><%= f.input :commentaire, label: false, :input_html => {:rows => 1} %></td>
+            <td><%= f.button :button, class: 'btn btn-sm btn-primary' do %><%= fa_icon('check') %> <% end %></td>
           <% end %>
-
-
-        </td>
-      </tr>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

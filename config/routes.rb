@@ -8,10 +8,8 @@ Rails.application.routes.draw do
   resources :permanences
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'events#dashboard'
+  root to: 'verifications#index'
 
   get '/calendrier', to: 'events#calendrier'
-  get '/dashboard', to: 'events#dashboard'
-  # get '/permanences', to: 'events#permanences'
 
 end

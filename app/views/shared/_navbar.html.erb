@@ -15,14 +15,14 @@
         </div>
       </li>
 
-      <li class="nav-item <% if request.path.start_with?('/dashboard') %>active<% end %>">
-        <a class="nav-link" href="/dashboard"><%= fa_icon('dashboard', class: 'text-success') %> Tableau de bord</a>
-      </li>
-      <li class="nav-item <% if request.path.start_with?('/calendrier') %>active<% end %>">
-        <a class="nav-link" href="/calendrier"><%= fa_icon('calendar', class: 'text-success') %> Calendrier</a>
+      <li class="nav-item <% if request.path.start_with?('/verifications') %>active<% end %>">
+        <a class="nav-link" href="/verifications"><%= fa_icon('check', class: 'text-success') %> Vérifications</a>
       </li>
       <li class="nav-item <% if request.path.start_with?('/permanences') %>active<% end %>">
         <a class="nav-link" href="/permanences"><%= fa_icon('clock-o', class: 'text-success') %> Permanences</a>
+      </li>
+      <li class="nav-item <% if request.path.start_with?('/calendrier') %>active<% end %>">
+        <a class="nav-link" href="/calendrier"><%= fa_icon('calendar', class: 'text-success') %> Calendrier</a>
       </li>
       <li class="nav-item <% if request.path.start_with?('/events') %>active<% end %>">
         <a class="nav-link" href="<%= events_path %>"><%= fa_icon('calendar-plus-o', class: 'text-success') %> Événements</a>

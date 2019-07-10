@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :set_beginning_of_week, only: [:index, :dashboard, :calendrier]
-  before_action :get_events, only: [:index, :dashboard, :calendrier]
+  before_action :set_beginning_of_week, only: [:index, :checks, :calendrier]
+  before_action :get_events, only: [:index, :checks, :calendrier]
 
   def index
     @events_recurrent = Event.where(recurrent: true)
@@ -9,19 +9,6 @@ class EventsController < ApplicationController
 
   def calendrier
     @month_events = Event.where(recurrent: false)
-  end
-
-  def dashboard
-    @verifications = Array.new
-    @events_recurrent.each do |e|
-      verification = Verification.new
-      verification['date'] = Date.today
-      verification['event_id'] = e.id
-      @verifications << verification
-    end
-  end
-
-  def show
   end
 
   def new
