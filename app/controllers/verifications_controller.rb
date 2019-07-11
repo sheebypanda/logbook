@@ -31,7 +31,7 @@ class VerificationsController < ApplicationController
   end
 
   def today_events
-    @today_events = Event.where(start_date: Date.today.all_day, recurrent: false).or(Event.where(end_date: Date.today.all_day, recurrent: false))
+    @today_events = Event.where("start_date <= ?", DateTime.now.beginning_of_day).where("end_date >= ?", DateTime.now.end_of_day).where(recurrent: false)
   end
   def get_event_recur
     @events_recurrent = Event.where(recurrent: true)

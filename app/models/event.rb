@@ -7,6 +7,10 @@ class Event < ApplicationRecord
 
   has_many :verifications
 
+  validates :start_date, presence: true
+  validates :end_date, presence: true
+
+
   def start_time
     self.start_date
   end

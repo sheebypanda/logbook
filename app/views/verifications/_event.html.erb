@@ -1,0 +1,41 @@
+<% if @today_events.count > 0 %>
+
+  <div class="row">
+    <% @today_events.each do |e| %>
+      <div class="col">
+        <% if e.priority.value == 1 %>
+          <% color = 'primary' %>
+          <% icon = 'info-circle' %>
+        <% elsif e.priority.value == 2 %>
+          <% color = 'warning' %>
+          <% icon = 'warning' %>
+        <% else e.priority.value == 3 %>
+          <% color = 'danger' %>
+          <% icon = 'life-ring' %>
+        <% end %>
+        <div class="card border-<%= color %> text-<%= color %>">
+          <div class="card-body">
+            <h5 class="card-title" class="card-text"><%= fa_icon(icon + ' 2x '+'text-'+color) %> <%= e.description %>.</h5>
+            <h5 class="card-title">
+              <span class="badge badge-pill badge-success"><%= fa_icon('institution') %> <%= e.si.trigram %></span>
+              <span class="badge badge-pill badge-primary"><%= fa_icon('tag')%> <%= e.subject.name %></span>
+              <span class="badge badge-pill badge-info"><%= fa_icon('hourglass-end')%> jusqu'au <%= l(e.end_date, format: '%d/%m') %></span>
+              <small class="text-muted"><em class='text-muted'>rédigé par </em><%= fa_icon('user') %> <%= e.user.firstname %></small>
+            </h5>
+            <p class="card-text"></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% else %>
+
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-info animated bounce slower" role="alert">
+        Pas d'événement aujourd'hui ! 😀️😴️
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -9,32 +9,7 @@
 <% end %>
 
 <!-- Block en cas d'événement dans la journée -->
-<% if @today_events.count > 0 %>
-  <div class="row">
-    <% @today_events.each do |e| %>
-      <div class="col">
-        <div class="card ">
-          <div class="card-body">
-            <h5 class="card-title">
-              <span class="badge badge-pill badge-primary"><%= fa_icon('tag')%> <%= e.subject.name %></span>
-              <span class="badge badge-pill badge-info"><%= fa_icon('cloud') %>  <%= e.si.trigram %></span>
-            </h5>
-            <p class="card-text"><%= e.description %>.</p>
-            <p class="card-text"><small class="text-muted"><%= fa_icon('user') %> <%= e.user.firstname %></small></p>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <div class="row">
-    <div class="col">
-      <div class="alert alert-info animated bounce slower" role="alert">
-        Pas d'événement aujourd'hui ! 😀️😴️
-      </div>
-    </div>
-  </div>
-<% end %>
+<%= render "event" %>
 
 <h2 class="text-center m-3">Vérifications récurrentes</h2>
 
@@ -56,7 +31,7 @@
       <% if v.present? %>
         <tr class="table-success">
           <td><span class='badge badge-success badge-pill'><%= v.event.si.trigram %></span></td>
-          <td><h4><span class='badge badge-warning badge-pill'><%= v.event.subject.name %></span></h4></td>
+          <td><h4><span class='badge badge-primary badge-pill'><%= v.event.subject.name %></span></h4></td>
           <td><%= v.event.description %></td>
           <td><%= v.user.firstname %> <%= v.user.name %></td>
           <td><%= v.commentaire %>✔️</td>
@@ -67,8 +42,8 @@
         <% v['event_id'] = e.id %>
         <% v['user_id'] = current_user.id %>
         <tr>
-          <td><span class='badge badge-success badge-pill'><%= e.si.trigram %></span></td>
-          <td><h4><span class='badge badge-warning badge-pill'><%= e.subject.name %></span></h4></td>
+          <td><span class='badge badge-warning badge-pill'><%= e.si.trigram %></span></td>
+          <td><h4><span class='badge badge-danger badge-pill'><%= e.subject.name %></span></h4></td>
           <td><%= e.description %></td>
           <%= simple_form_for v, remote: true do |f| %>
             <td><%= f.association :user, as: :select, label: false, label_method: lambda {|e| "#{e.firstname} #{e.name}"}, wrapper_html: { class: 'mb-0' } %></td>

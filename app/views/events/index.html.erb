@@ -35,7 +35,7 @@
         <td><%= event.priority.name %></td>
         <td><%= event.category.name %></td>
         <td><%= event.subject.name %></td>
-        <td><%= event.start_date.strftime("%d/%m/%y - %H:%M") %></td>
+        <td><%= l(event.start_date, format: "%d/%m/%y - %H:%M") %></td>
         <td><%= event.end_date.strftime("%d/%m/%y - %H:%M") if event.end_date %></td>
         <td><%= event.description %></td>
         <td><% if event.disable %><%= fa_icon('check', class:"text-success") %><% else %><%= fa_icon('close', class:"text-danger") %><% end %></td>
