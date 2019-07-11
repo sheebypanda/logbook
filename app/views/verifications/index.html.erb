@@ -29,7 +29,7 @@
 <% else %>
   <div class="row">
     <div class="col">
-      <div class="alert alert-success animated bounce slower" role="alert">
+      <div class="alert alert-info animated bounce slower" role="alert">
         Pas d'événement aujourd'hui ! 😀️😴️
       </div>
     </div>
@@ -38,10 +38,10 @@
 
 <h2 class="text-center m-3">Vérifications récurrentes</h2>
 
-<table class="table table-hover table-borderless">
+<table class="table table-borderless">
   <thead>
     <tr>
-      <th><%= fa_icon('cloud') %> S.I</th>
+      <th><%= fa_icon('institution') %> S.I</th>
       <th><%= fa_icon('tag') %> Sujet</th>
       <th><%= fa_icon('clipboard') %> Description</th>
       <th><%= fa_icon('user') %> Attribué à</th>
@@ -55,11 +55,11 @@
       <% v = Verification.where(date: Date.today, event_id: e.id).first %>
       <% if v.present? %>
         <tr class="table-success">
-          <td><%= v.event.si.name %></td>
-          <td><%= v.event.subject.name %></td>
+          <td><span class='badge badge-success badge-pill'><%= v.event.si.trigram %></span></td>
+          <td><h4><span class='badge badge-warning badge-pill'><%= v.event.subject.name %></span></h4></td>
           <td><%= v.event.description %></td>
           <td><%= v.user.firstname %> <%= v.user.name %></td>
-          <td><%= v.commentaire %></td>
+          <td><%= v.commentaire %>✔️</td>
           <td><%= link_to fa_icon('close'), v, method: :delete, remote: true, class: 'btn btn-danger btn-sm' %></td>
         </tr>
       <% else %>
@@ -67,15 +67,15 @@
         <% v['event_id'] = e.id %>
         <% v['user_id'] = current_user.id %>
         <tr>
-          <td><%= e.si.name %></td>
-          <td><%= e.subject.name %></td>
+          <td><span class='badge badge-success badge-pill'><%= e.si.trigram %></span></td>
+          <td><h4><span class='badge badge-warning badge-pill'><%= e.subject.name %></span></h4></td>
           <td><%= e.description %></td>
           <%= simple_form_for v, remote: true do |f| %>
-            <td><%= f.association :user, as: :select, label: false, label_method: lambda {|e| "#{e.firstname} #{e.name}"} %></td>
+            <td><%= f.association :user, as: :select, label: false, label_method: lambda {|e| "#{e.firstname} #{e.name}"}, wrapper_html: { class: 'mb-0' } %></td>
             <%= f.input :date, as: :hidden, :input_html => {:value => Date.today} %>
             <%= f.input :event_id, as: :hidden, :input_html => {:value => e.id} %>
-            <td><%= f.input :commentaire, label: false, :input_html => {:rows => 1} %></td>
-            <td><%= f.button :button, class: 'btn btn-sm btn-primary' do %><%= fa_icon('check') %> <% end %></td>
+            <td><%= f.input :commentaire, as: :string, label: false, wrapper_html: { class: 'mb-0' } %></td>
+            <td><%= f.button :button, class: 'btn btn-sm btn-primary' do %><%= fa_icon('check') %><% end %></td>
           <% end %>
         </tr>
       <% end %>
