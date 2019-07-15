@@ -11,8 +11,17 @@
 <!-- Block en cas d'événement dans la journée -->
 <%= render "event" %>
 
-<h2 class="text-center m-3">Vérifications d'aujourd'hui</h2>
-
+<div class="row mt-3">
+  <% if params['date'] %>
+    <% date = params['date'].to_date %>
+  <% else %>
+    <% date = Date.today %>
+  <% end %>
+  <div class="col"><%= link_to fa_icon('chevron-left'), "verifications?date="+(date-1).to_s, class:'btn btn-primary' %></div>
+  <div class="col text-center">
+    <h4 class="mt-3 mb-3">Vérifications d'aujourd'hui :</h4>
+  </div>
+  <div class="col text-right"><%= link_to fa_icon('chevron-right'), "verifications?date="+(date+1).to_s, class:'btn btn-primary' %></div>
 <table id="tablesorter" class="table table-borderless">
   <thead>
     <tr>
