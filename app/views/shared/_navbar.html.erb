@@ -16,7 +16,7 @@
       </li>
 
       <li class="nav-item <% if request.path.start_with?('/verifications') %>active<% end %>">
-        <a class="nav-link" href="/verifications"><%= fa_icon('check', class: 'text-success') %> Vérifications</a>
+        <%= link_to fa_icon('check', class: 'text-success')+' Vérifications', verifications_path, class: 'nav-link', data: {turbolinks: false} %>
       </li>
       <li class="nav-item <% if request.path.start_with?('/permanences') %>active<% end %>">
         <a class="nav-link" href="/permanences"><%= fa_icon('clock-o', class: 'text-success') %> Permanences</a>
@@ -29,10 +29,10 @@
       </li>
 
     </ul>
-    <form class="form-inline" action="/events">
+    <!-- <form class="form-inline" action="/events">
       <input class="form-control mr-sm-2" type="text" placeholder="Rechercher" aria-label="Rechercher">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
-    </form>
+    </form> -->
 
     <ul class="navbar-nav px-3">
       <li class="nav-item dropdown my-2 my-lg-0">
@@ -47,7 +47,7 @@
       </li>
       <% if user_signed_in? %>
         <li class="nav-item text-nowrap">
-          <%= link_to fa_icon("sign-out") + "Déconnexion", destroy_user_session_path, method: :delete, :class => 'nav-link'  %>
+          <%= link_to fa_icon("sign-out", class:"text-success") + "Déconnexion", destroy_user_session_path, method: :delete, :class => 'nav-link'  %>
         </li>
       <% end %>
       </ul>

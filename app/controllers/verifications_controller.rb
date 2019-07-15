@@ -1,8 +1,9 @@
 class VerificationsController < ApplicationController
-  before_action :get_event_recur, :today_events, only: :index
   before_action :set_verification, only: :destroy
 
   def index
+    @events_recurrent = Event.where(recurrent: true)
+    @today_events = Event.where(["recurrent = ? AND start_date <= ? AND end_date >= ?", false, DateTime.now.end_of_day, DateTime.now.beginning_of_day])
   end
 
   def new
@@ -30,12 +31,6 @@ class VerificationsController < ApplicationController
     params.require(:verification).permit(:user_id, :event_id, :date, :commentaire)
   end
 
-  def today_events
-    @today_events = Event.where("start_date <= ?", DateTime.now.beginning_of_day).where("end_date >= ?", DateTime.now.end_of_day).where(recurrent: false)
-  end
-  def get_event_recur
-    @events_recurrent = Event.where(recurrent: true)
-  end
   def set_verification
     @verification = Verification.find(params[:id])
   end

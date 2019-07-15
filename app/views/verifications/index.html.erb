@@ -11,9 +11,9 @@
 <!-- Block en cas d'événement dans la journée -->
 <%= render "event" %>
 
-<h2 class="text-center m-3">Vérifications récurrentes</h2>
+<h2 class="text-center m-3">Vérifications d'aujourd'hui</h2>
 
-<table class="table table-borderless">
+<table id="tablesorter" class="table table-borderless">
   <thead>
     <tr>
       <th><%= fa_icon('institution') %> S.I</th>
@@ -50,7 +50,7 @@
             <%= f.input :date, as: :hidden, :input_html => {:value => Date.today} %>
             <%= f.input :event_id, as: :hidden, :input_html => {:value => e.id} %>
             <td><%= f.input :commentaire, as: :string, label: false, wrapper_html: { class: 'mb-0' } %></td>
-            <td><%= f.button :button, class: 'btn btn-sm btn-primary' do %><%= fa_icon('check') %><% end %></td>
+            <td><%= f.button :button, remote: true, class: 'btn btn-sm btn-primary' do %><%= fa_icon('check') %><% end %></td>
           <% end %>
         </tr>
       <% end %>

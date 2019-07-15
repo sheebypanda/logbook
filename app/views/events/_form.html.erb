@@ -41,7 +41,10 @@
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, 'Ajouter', class:'btn btn-primary btn-block' %>
+      <%= f.button :submit, 'Ajouter', class:'btn btn-primary btn-block mb-3' %>
+      <% if params['action'] == 'edit' %>
+      <%= link_to fa_icon('trash')+' Supprimer', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-block mt-3" %>
+      <% end %>
     </div>
   <% end %>
 </div>
